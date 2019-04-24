@@ -61,7 +61,17 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+char uart_buf[30];
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_13)
+	{
+			memset(uart_buf,0,sizeof(uart_buf));
+		sprintf(uart_buf,"Pressed User Button\r\n");
+		HAL_UART_Transmit_IT(&huart3,uart_buf,sizeof(uart_buf));
+	}
+}
 /* USER CODE END 0 */
 
 /**
